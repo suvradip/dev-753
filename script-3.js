@@ -99,6 +99,8 @@ var check = (function(fileAttrName,fileChartName){
         var attrName = mapWithAliasName(filesAttr[i].replace(/\.[^/.]+$/, "")); //filesAttr[i] filesAttr[i].match(/[\w]*/)
         check(filesAttr[i],attrName);
     }
+
+    console.log("Finish");
     phantom.exit();
 })();
 

@@ -1,5 +1,6 @@
 // to run this code use phantomjs script-1.js
 var page;
+//var fcLink = "http://www.fusioncharts.com/dev/chart-attributes.html?chart=area2d";
 var fcLink = "http://127.0.0.1:4000/paradocs/jekyll/out/chart-attributes.html?chart=area2d";
 
 page = require('webpage').create();
@@ -26,19 +27,20 @@ var createLocalFiles = (function(urlObject) {
     //try to inject jequery in the open page.
     if (page.injectJs("jquery.js")) {
 
-        var value = page.evaluate(function() {       
+        var value = page.evaluate(function(fcLink) {       
         var resources = []; 
         //select all the links inside the li tag 
         $("#select-chart li a").each(function() {
             
                 temp ={};
                 temp.name = $(this).text();
-                temp.url =  $(this).attr("href");
+                //temp.url = "http://127.0.0.1:4000" + $(this).attr("href");
+                temp.url = fcLink.match(/https?:\/\/[\w\.]+(:\d+)?/i)[0] + $(this).attr("href");
                 resources.push(temp);   
         });
 
         return resources;
-        });
+        },fcLink);
      
 
         var detailsContent  = JSON.stringify(value, null, 4);
